@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tampilan Cover Buku</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .book {
+      width: 220px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .book:hover {
+      transform: scale(1.05);
+    }
+
+    .book img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .book-title {
+      text-align: center;
+      margin-top: 10px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .book-desc {
+      text-align: center;
+      font-size: 14px;
+      color: #555;
+      margin-top: 5px;
+    }
+
+    /* Modal (popup isi buku) */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.7);
+    }
+
+    .modal-content {
+      background: #fff;
+      margin: 8% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 700px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .close {
+      float: right;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .book-text {
+      margin-top: 20px;
+      text-align: justify;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📚 Koleksi Buku</h1>
+
+  <div class="container">
+    <div class="book" onclick="showBook('buku1')">
+      <img src="images/gadis_pantai98752_f.jpg" alt="Gadis Pantai">
+      <div class="book-title">Gadis Pantai</div>
+      <div class="book-desc">Karya Pramoedya Ananta Toer</div>
+    </div>
+
+    <div class="book" onclick="showBook('buku2')">
+      <img src="images/images petualangan anrkis kecil_9dbc67fd.jpg" alt="Petualangan anarkis kecil">
+      <div class="book-title">Petualangan Anarkis Kecil</div>
+      <div class="book-desc">Karya R. Kurniawan</div>
+    </div>
+  </div>
+
+  <!-- Modal untuk isi buku -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeBook()">&times;</span>
+      <h2 id="judulBuku"></h2>
+      <div id="isiBuku" class="book-text"></div>
+    </div>
+  </div>
+
+  <script>
+    function showBook(id) {
+      const modal = document.getElementById('modal');
+      const judul = document.getElementById('judulBuku');
+      const isi = document.getElementById('isiBuku');
+
+      if (id === 'buku1') {
+        judul.innerText = 'Gadis Pantai';
+        isi.innerHTML = `
+          <p><strong>Deskripsi:</strong> Gadis Pantai karya Pramoedya Ananta Toer menceritakan seorang gadis desa
+          yang dinikahkan secara paksa dengan seorang bangsawan. Kisah ini menggambarkan ketimpangan sosial,
+          perjuangan perempuan, dan kritik terhadap budaya feodal di masa kolonial.</p>
+          <p>Melalui karakter utamanya, pengarang menyoroti bagaimana kekuasaan dan kelas sosial
+          dapat memenjarakan kebebasan seorang individu.</p>
+        `;
+      } else if (id === 'buku2') {
+        judul.innerText = 'Petualangan Anarkis Kecil';
+        isi.innerHTML = `
+          <p><strong>Deskripsi:</strong> Petualangan Anarkis Kecil adalah kisah penuh semangat tentang seorang anak muda
+          yang menolak tunduk pada aturan dan mencari arti kebebasan sejati.</p>
+          <p>Dalam perjalanannya, ia belajar bahwa kebebasan bukan hanya tentang melawan,
+          tetapi juga tentang memahami diri sendiri dan dunia di sekitarnya.</p>
+        `;
+      }
+
+      modal.style.display = 'block';
+    }
+
+    function closeBook() {
+      document.getElementById('modal').style.display = 'none';
+    }
+
+    // Tutup modal jika klik di luar kotak isi
+    window.onclick = function(event) {
+      const modal = document.getElementById('modal');
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>

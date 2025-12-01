@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gadis Pantai - Pramoedya Ananta Toer</title>
+    <style>
+        /* Gaya Dasar Halaman */
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            user-select: none;
+            overflow-x: hidden;
+        }
+
+        /* CONTAINER UTAMA */
+        #main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 700px;
+            transition: opacity 0.5s;
+        }
+
+        /* --- Tampilan Awal: Cover dan Deskripsi --- */
+        .initial-view {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+        }
+
+        /* Wadah Buku (Cover) */
+        .book-container {
+            width: 300px;
+            height: 450px;
+            position: relative;
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.6);
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        /* Gaya Cover */
+        #cover-image {
+            width: 100%;
+            height: 100%;
+            background-image: url('images/gadis_pantai98752_f.jpg'); 
+            background-size: cover;
+            background-position: center;
+            border: 3px solid #4e342e;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 1);
+            background-color: #8D6E63;
+            background-blend-mode: multiply; /* Agar teks judul tetap menonjol */
+        }
+
+        #cover-image h1 {
+            font-family: Georgia, serif;
+            font-size: 1.8em;
+            margin: 5px 0 10px;
+            font-style: italic;
+            border: 1px solid white;
+            padding: 5px 10px;
+            text-align: center;
+        }
+
+        /* Wadah Deskripsi */
+        .description-container {
+            width: 100%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+            line-height: 1.5;
+            text-align: justify;
+        }
+        
+        .description-container h2 {
+            margin-top: 0;
+            font-size: 1.2em;
+            color: #5d4037;
+            border-bottom: 1px solid #5d4037;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        /* --- Tampilan Isi Buku (Melebar) --- */
+        #content-view {
+            display: none;
+            width: 95vw;
+            max-width: 1200px;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        /* Tombol Kembali */
+        #back-to-cover {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 8px 15px;
+            background-color: #5d4037;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9em;
+            z-index: 100;
+        }
+
+        /* Gaya Halaman Isi (Horizontal) */
+        .content-pages-wrapper {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory; 
+            padding-bottom: 10px;
+            min-height: 600px;
+        }
+
+        .page-content {
+            flex: 0 0 100%; 
+            width: 100%;
+            min-width: 600px;
+            scroll-snap-align: start;
+            padding: 0 30px;
+            box-sizing: border-box;
+            border-right: 1px dashed #ddd;
+        }
+
+        .page-content:last-child {
+            border-right: none;
+        }
+        
+        .page-header {
+            font-size: 1.2em;
+            text-align: center;
+            border-bottom: 2px solid #5d4037;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #5d4037;
+        }
+
+        /* Gaya Khusus Halaman Pengarang */
+        #info-page h3 {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 1.3em;
+            color: #333;
+        }
+        #info-page p {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            text-indent: 0;
+        }
+
+        /* Gaya Isi Novel */
+        .page-content p {
+            margin-bottom: 15px;
+            text-indent: 1.5em;
+            line-height: 1.6;
+            font-size: 0.95em;
+            text-align: justify;
+        }
+        
+        .page-footer {
+            text-align: center;
+            font-size: 0.75em;
+            color: #999;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="main-container">
+
+    <div class="initial-view" id="initial-view">
+        <div class="book-container" id="book-container">
+            <div id="cover-image">
+                <p class="author">Pramoedya Ananta Toer</p>
+                <h1>GADIS PANTAI</h1>
+                <p class="tagline">Sebuah Roman Keluarga</p>
+                <p style="margin-top: 50px; font-size: 0.8em;">(KLIK COVER UNTUK BACA)</p>
+            </div>
+        </div>
+
+        <div class="description-container">
+            <h2>Deskripsi Singkat Novel</h2>
+            <p>
+                Novel <em>Gadis Pantai</em> adalah karya otobiografi fiksi dari penulis besar Indonesia, **Pramoedya Ananta Toer**. Kisah ini menceritakan seorang gadis kampung nelayan berusia **empat belas tahun** yang dinikahkan dengan seorang **Bendoro** (priyayi tinggi) di Jawa pada awal abad ke-20. Gadis ini diperlakukan sebagai "Mas Nganten" tanpa hak dan kebebasan sejati, terperangkap dalam sistem feodal yang dingin.
+            </p>
+            <p>
+                Novel ini dengan kuat menyoroti **tabir feodalisme, kekuasaan, dan perlawanan seorang perempuan** terhadap adat yang merenggut kemerdekaannya.
+            </p>
+        </div>
+    </div>
+
+    <div id="content-view">
+        <button id="back-to-cover" onclick="showCover()">Kembali ke Cover</button>
+        
+        <div class="content-pages-wrapper">
+        
+            <div class="page-content" id="info-page">
+                <div class="page-header">INFORMASI BUKU</div>
+                
+                <h3 style="margin-top: 20px;">Pramoedya Ananta Toer</h3>
+                <p>
+                    Pengarang Novel Klasik Indonesia.<br>
+                    Novel ini pertama kali terbit sebagai cerita bersambung di Lentera / Bintang Timur (1962-1965).
+                </p>
+
+                <h3 style="margin-top: 50px;">Penerbit</h3>
+                <p>
+                    HASTA MITRA, Jakarta, April 2000 (Edisi Pembebasan pasca-Orde Baru).<br>
+                    Novel ini pernah dilarang oleh Jaksa Agung pada tahun 1987.
+                </p>
+
+                <h3 style="margin-top: 50px;">Tentang Novel</h3>
+                <p>
+                    Sebuah Roman Keluarga. <br>
+                    Telah diterjemahkan ke dalam Bahasa Belanda (1989) dan Bahasa Inggris (1991).
+                </p>
+                
+
+                <div class="page-footer">Halaman Pengarang (1/6)</div>
+            </div>
+
+
+            <div class="page-content" id="page-1">
+                <div class="page-header">PENGANTAR & BAGIAN AWAL</div>
+                <p style="border-left: 3px solid #795548; padding-left: 10px; margin-top: 15px; font-style: italic; text-indent: 0;">
+                    Kulitnya kuning langsat. Tubuhnya kecil ramping. Setiap hari punggungnya dibebani bakul besar dalam gendongan selendang... Inilah tebusan janjiku. Pada dia yang tak pernah ceritakan sejarah diri. Dia yang tak pernah kuketahui namanya. Maka cerita ini kubangun dari berita orang lain, dari yang dapat kusaksikan, kukhayalkan, kutuangkan.
+                </p>
+
+                <h3>Bagian Pertama</h3>
+                <p>
+                    EMPAT BELAS TAHUN UMURNYA WAKTU ITU. KULIT LANGSAT. Tubuh kecil mungil. Mata agak sipit. Hidung ala kadarnya. Dan jadilah ia bunga kampung nelayan sepenggal pantai keresidenan Jepara Rembang. Hari demi hari batinnya diisi derai ombak dan pandangnya oleh perahu-perahu yang berangkat di subuh hari pulang di siang atau sore hari...
+                </p>
+                <p>
+                    Ia telah tinggalkan abad sembilan belas, memasuki abad duapuluh. Angin yang bersuling di puncak pohon-pohon cemara tidak membuat pertumbuhannya lebih baik. Ia tetap kecil mungil bermata jeli.
+                </p>
+                <p>
+                    Maka pada suatu hari perutusan seseorang itu datang ke rumah orangtua gadis. Dan beberapa hari setelah itu sang gadis harus tinggalkan dapurnya, suasana kampungnya, kampungnya sendiri dengan bau amis abadinya.
+                </p>
+                <div class="page-footer">Halaman 2/6</div>
+            </div>
+
+            <div class="page-content" id="page-2">
+                <div class="page-header">PERNIKAHAN KERIS DAN KEDATANGAN</div>
+                <p>
+                    Ia dibawa ke kota. Tubuhnya dibalut kain dan kebaya yang tak pernah diimpikannya bakal punya. Kemarin malam ia telah dinikahkan. Dinikahkan dengan **sebilah keris**. Detik itu ia tahu: kini ia bukan anak bapaknya lagi. Kini ia istri sebilah keris, wakil seseorang yang tak pernah dilihatnya seumur hidup.
+                </p>
+                <p>
+                    Iring-iringan hanya terdiri dua dokar 'kretek', emaknya, bapaknya... Bedak tebal pada wajahnya telah berguris-guris mengelimantang oleh air mata. Dan emaknya selalu memperbaikinya kembali, "Sst. Jangan nangis. Hari ini kau jadi istri pembesar."
+                </p>
+                <p>
+                    "Beruntung kau menjadi istri orang alim, dua kali pernah naik haji... Dia pembesar, nak, orang berkuasa, sering dipanggil Bendoro Bupati." Dokar mulai memasuki jalanan dengan deretan toko orang Tionghoa.
+                </p>
+                <p>
+                    Mereka berhenti di sebuah gang antara paviliun dan gedung utama. Akhirnya seorang bujang wanita masuk membawa air teh manis sambil menggendong bayi pada punggungnya.
+                </p>
+                <div class="page-footer">Halaman 3/6</div>
+            </div>
+            
+            <div class="page-content" id="page-3">
+                <div class="page-header">KENYATAAN ISTANA</div>
+                <p>
+                    "Itu anak siapa?" emak bertanya, suaranya gemetar. "Anak majikanku, anak Bendoro." "Di mana emaknya?" "Pulang ke kampung." **"Takkan balik lagi. Dia diceraikan."** Kenyataan ini mengejutkan rombongan dari kampung nelayan.
+                </p>
+                <p>
+                    Bendoro telah bangun, dan kepala kampung dititahkan menghadap. Terdengar suara perlahan dari luar kamar: "Jangan main bola! Haram! Haram! Tak ingat pesan Ayahanda? Itu perbuatan terkutuk orang-orang murtad..."
+                </p>
+                <p>
+                    Gadis Pantai mencoba memeluk emaknya. Emak menolakkan tubuhnya. Kemudian dengan setangan membenahkan letak pakaian anaknya dan membedakinya kembali. Gadis Pantai memandangi air teh yang tiada terjamah.
+                </p>
+                <p>
+                    Terdengar bunyi selop kulit berat terseret. "Bendoro sudah bangun," kepala kampung memperingatkan. Sunyi senyap dalam kamar. Gadis Pantai mengeluarkan keris bersarung kuningan...
+                </p>
+                <div class="page-footer">Halaman 4/6</div>
+            </div>
+            
+            <div class="page-content" id="page-4">
+                <div class="page-header">PUNCAK KONFLIK</div>
+                <p>
+                    Hampir-hampir kepala kampung membuat kursinya terbalik waktu berdiri. Terdengar suara keras, **"Kau tak pernah bilang, gadismu itu sudah haid apa belum?!"** Emak menatap bapak, kemudian pada si Gadis, "Sudah?" tanyanya...
+                </p>
+                <p>
+                    Kepala kampung kembali dengan wajah pucat. Ia hanya menatap emak, "Celaka," desisnya. Ia tidak membawa keris lagi.
+                </p>
+                <p>
+                    Bendoro ingin segera menceraikan Gadis Pantai karena ia sudah subur (sudah haid) dan dapat melahirkan anak. Dalam pandangan Bendoro, istri yang melahirkan anak priayi haruslah berasal dari keluarga priayi juga, bukan dari rakyat jelata (Gadis Pantai).
+                </p>
+                <div class="page-footer">Halaman 5/6</div>
+            </div>
+
+            <div class="page-content" id="page-5">
+                <div class="page-header">PERCERAIAN DAN PENUTUP</div>
+                <p>
+                    "...Anggaplah anak bapak sudah tiada lagi. Perahu buatan Lasem itu bakal jadi anak bapak yang paling ceria." Gadis Pantai berdiri, kemudian merangkul bapak. "Beri aku uang sekedarnya, bapak." Ia merogoh kantong bapak, mengambil beberapa mata uang perak.
+                </p>
+                <p>
+                    Tanpa ragu-ragu Gadis Pantai menuju dokar dan naik ke atasnya. "Kembali ke kota, man!" Gadis Pantai mengambil cambuk dan melecut kuda.
+                </p>
+                <p>
+                    Kuda pun melompat dan lari. **Tanpa menengok ke belakang lagi Gadis Pantai memusatkan mata ke depan.**
+                </p>
+                <p>
+                    Dalam satu bulan setelah itu sering orang melihat sebuah dokar berhenti di depan pintu pekarangan depan Bendoro dan sebuah wajah mengintip dari kiraian jendela dokar, tapi tak ada terjadi apa-apa di pekarangan itu. Selewat sebulan, tak pernah lagi ada dokar berhenti, tak ada lagi wajah mengintip.
+                </p>
+                <div class="page-footer">Halaman 6/6 (Tamat)</div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const bookContainer = document.getElementById('book-container');
+        const initialView = document.getElementById('initial-view');
+        const contentView = document.getElementById('content-view');
+        const contentWrapper = document.querySelector('.content-pages-wrapper');
+
+        // Fungsi untuk menampilkan Isi Buku
+        bookContainer.addEventListener('click', showContent);
+
+        function showContent() {
+            // Sembunyikan tampilan awal dengan fade-out
+            initialView.style.opacity = '0';
+            
+            setTimeout(() => {
+                initialView.style.display = 'none';
+                contentView.style.display = 'block';
+                // Reset scroll horizontal ke halaman pertama (Halaman Pengarang)
+                contentWrapper.scrollLeft = 0;
+            }, 500); // Tunggu sampai fade-out selesai
+        }
+
+        // Fungsi untuk menampilkan Cover dan Deskripsi (Dipanggil oleh tombol "Kembali ke Cover")
+        window.showCover = function() {
+            // Sembunyikan tampilan isi
+            contentView.style.display = 'none';
+            
+            // Tampilkan tampilan awal dengan fade-in
+            initialView.style.display = 'flex';
+            setTimeout(() => {
+                initialView.style.opacity = '1';
+            }, 50);
+        }
+    });
+</script>
+
+</body>
+</html>

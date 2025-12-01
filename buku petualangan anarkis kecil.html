@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petualangan Anarkis Kecil - Bodhi IA</title>
+    <style>
+        /* Gaya Dasar Halaman */
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            user-select: none;
+            overflow-x: hidden;
+        }
+
+        /* CONTAINER UTAMA */
+        #main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 700px;
+            transition: opacity 0.5s;
+        }
+
+        /* --- Tampilan Awal: Cover dan Deskripsi --- */
+        .initial-view {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+        }
+
+        /* Wadah Buku (Cover) */
+        .book-container {
+            width: 300px;
+            height: 450px;
+            position: relative;
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.6);
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        /* Gaya Cover */
+        #cover-image {
+            width: 100%;
+            height: 100%;
+            background-image: url('images/images petualangan anrkis kecil_9dbc67fd.jpg'); 
+            background-size: cover;
+            background-position: center;
+            border: 3px solid #333;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 1);
+            background-color: #555;
+            background-blend-mode: darken;
+        }
+
+        #cover-image h1 {
+            font-family: Arial, sans-serif;
+            font-size: 2.2em;
+            margin: 5px 0 10px;
+            text-transform: uppercase;
+            color: #ffcc00; 
+            text-align: center;
+        }
+
+        /* Wadah Deskripsi */
+        .description-container {
+            width: 100%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+            line-height: 1.5;
+            text-align: justify;
+        }
+        
+        .description-container h2 {
+            margin-top: 0;
+            font-size: 1.3em;
+            color: #cc0000; 
+            border-bottom: 2px solid #cc0000;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        /* --- Tampilan Isi Buku (Melebar) --- */
+        #content-view {
+            display: none;
+            width: 95vw;
+            max-width: 1200px;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        /* Tombol Kembali */
+        #back-to-cover {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 8px 15px;
+            background-color: #cc0000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9em;
+            z-index: 100;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Gaya Halaman Isi (Horizontal) */
+        .content-pages-wrapper {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory; 
+            padding-bottom: 10px;
+            min-height: 600px;
+        }
+
+        .page-content {
+            flex: 0 0 100%; 
+            width: 100%;
+            min-width: 600px;
+            scroll-snap-align: start;
+            padding: 0 30px;
+            box-sizing: border-box;
+            border-right: 1px dashed #ddd;
+        }
+
+        .page-content:last-child {
+            border-right: none;
+        }
+        
+        .page-header {
+            font-size: 1.2em;
+            text-align: center;
+            border-bottom: 2px solid #cc0000;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #cc0000;
+        }
+        
+        #author-page h3 {
+            text-align: center;
+            margin-top: 100px;
+            font-size: 1.5em;
+            color: #333;
+        }
+        #author-page p {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+        }
+
+
+        .page-content p {
+            margin-bottom: 15px;
+            text-indent: 0.5em;
+            line-height: 1.6;
+            font-size: 0.95em;
+            text-align: justify;
+        }
+        
+        .page-footer {
+            text-align: center;
+            font-size: 0.75em;
+            color: #999;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="main-container">
+
+    <div class="initial-view" id="initial-view">
+        <div class="book-container" id="book-container">
+            <div id="cover-image">
+                <p class="author">BODHI IA</p>
+                <h1>PETUALANGAN ANARKIS KECIL</h1>
+                <p style="margin-top: 50px; font-size: 0.8em;">(KLIK COVER UNTUK BACA)</p>
+            </div>
+        </div>
+
+        <div class="description-container">
+            <h2>DEDIKASI & DESKRIPSI</h2>
+            <p style="text-align: center; font-style: italic; font-weight: bold;">
+                "BUKU INI DIDEDİKASIKAN UNTUK SETIAP ANAK-ANAK MERDEKA YANG MENGEJAR MIMPI DI JALANAN"
+            </p>
+            <p>
+                Hai kawan-kawan! Kalian satu langkah ke depan menuju titik api pencerahan. Selamat datang dunia baru. Tempat di mana tak ada satu orang pun yang akan melarang imajinasimu. Menuju kebebasan, menuju anarki.
+            </p>
+            <p>
+                Anarkisme adalah sebuah ideologi yang menempatkan **kebebasan dan kemerdekaan** sebagai nilai paling penting dalam masyarakat. Buku ini akan membawa kalian ke dalam sebuah petualangan yang seru dan penuh makna tentang anarkisme.
+            </p>
+        </div>
+    </div>
+
+    <div id="content-view">
+        <button id="back-to-cover" onclick="showCover()">Kembali ke Cover</button>
+        
+        <div class="content-pages-wrapper">
+        
+            <div class="page-content" id="author-page">
+                <div class="page-header">TENTANG PENULIS DAN EDITOR</div>
+                <h3>BODHI IA</h3>
+                <p>
+                    Penulis buku "Petualangan Anarkis Kecil". <br>
+                    Bodhi aktif dalam pergerakan sosial dan edukasi anarkisme, berdedikasi untuk menyebarkan nilai-nilai kebebasan dan keadilan sosial kepada generasi muda.
+                </p>
+                
+                <h3 style="margin-top: 50px;">MING</h3>
+                <p>
+                    Editor buku ini.
+                </p>
+
+                <h3 style="margin-top: 50px;">GULMA PRESS</h3>
+                <p>
+                    Dicetak oleh Gulma Press, 2023.
+                </p>
+
+                <div class="page-footer">Halaman Pengarang (1/6)</div>
+            </div>
+
+
+            <div class="page-content" id="page-1">
+                <div class="page-header">BAB I: APA ITU ANARKISME?</div>
+                <p>
+                    Jika kamu mendengar kata anarkisme, apa yang ada di benakmu? Mungkin terdengar asing dan menakutkan, tapi kali ini kita akan membahasnya secara singkat dan mudah dipahami. Anarkisme adalah sebuah ideologi atau pemikiran politik yang menekankan pada **kebebasan dan kemerdekaan individual**. Gerakan ini muncul sebagai reaksi terhadap sistem pemerintahan yang dianggap tidak adil dan korup.
+                </p>
+                <p>
+                    Anarkis percaya bahwa semua orang harus memiliki kebebasan untuk menentukan nasibnya sendiri dan tidak ada yang boleh memaksakan kehendak pada mereka. Hal ini bisa dilakukan dengan cara melawan ketidakadilan, diskriminasi, atau penindasan yang dilakukan oleh pihak yang berkuasa.
+                </p>
+                <p>
+                    **Ketiadaan Pemerintahan:** Anarkisme berasal dari kata "anarki," yang berarti ketiadaan pemerintahan. Ini tidak berarti kekacauan total, tetapi sebuah masyarakat di mana orang mengatur diri mereka sendiri melalui asosiasi sukarela dan saling membantu, bukan melalui paksaan negara.
+                </p>
+                <p>
+                    **Kontrol Mandiri:** Dalam masyarakat anarkis, setiap orang memiliki hak yang sama untuk mengambil keputusan dan mengontrol kehidupannya sendiri tanpa adanya paksaan dari pihak lain.
+                </p>
+                <div class="page-footer">Bab I (2/6)</div>
+            </div>
+
+            <div class="page-content" id="page-2">
+                <div class="page-header">BAB II: SEJARAH DAN TOKOH ANARKISME</div>
+                <p>
+                    Gerakan anarkis berasal dari keinginan untuk menentang sistem pemerintahan dan kapitalisme yang dianggap tidak adil, yang hanya menguntungkan segelintir orang kaya saja. Pada akhir abad 19, kelas pekerja dan petani hidup sulit sementara elit hidup mewah.
+                </p>
+                <p>
+                    **Tokoh-tokoh Penting:**
+                    <ul>
+                        <li>**Pierre-Joseph Proudhon:** Tokoh yang pertama kali menyebut diri sebagai "anarkis" dan mengajukan gagasan anarkis-mutualisme (perubahan dicapai secara damai, fokus pada kepemilikan dan pengelolaan mandiri).</li>
+                        <li>**Mikhail Bakunin:** Menentang institusi negara dan kapitalisme, percaya bahwa negara bertujuan mengontrol warganya dan menggunakan cara represif.</li>
+                        <li>**Emma Goldman:** Mempercayai hubungan antara kebebasan dan kesenangan, serta aktif memperjuangkan hak-hak perempuan.</li>
+                    </ul>
+                </p>
+                <p>
+                    Gerakan anarkis memainkan peran penting dalam **Revolusi Rusia** (1917) dan **Perang Saudara Spanyol** (1936), berjuang melawan kaum fasis-nasionalis dan menentang segala bentuk otoritas.
+                </p>
+                <div class="page-footer">Bab II (3/6)</div>
+            </div>
+            
+            <div class="page-content" id="page-3">
+                <div class="page-header">BAB III: SOLIDARITAS DAN PROPAGANDA BURUK</div>
+                <p>
+                    **Solidaritas adalah Kunci:** Anarkisme menekankan pentingnya **solidaritas dan kebersamaan** di antara anggota masyarakat. Saling tolong-menolong dan saling menghargai menjadi nilai utama. Tanpa kebersamaan, kita akan mudah dilibas oleh sistem yang menindas.
+                </p>
+                <p>
+                    **Keadilan Sosial dan Lingkungan:** Anarkisme juga mengutamakan **keadilan sosial, lingkungan yang berkelanjutan, dan kesejahteraan bersama**. Ini berarti setiap orang harus memiliki akses yang sama terhadap sumber daya dan kekayaan masyarakat.
+                </p>
+                <p>
+                    **Melawan Propaganda:** Anarkisme sering dicemooh dan ditakuti karena media massa yang disebut **mesin propaganda** sering mengganti kata 'kerusuhan' dengan 'anarkisme'. Kita tidak boleh menghakimi ideologi ini hanya berdasarkan persepsi negatif yang keliru.
+                </p>
+                <p style="font-style: italic; border-left: 3px solid #ffcc00; padding-left: 10px;">
+                    "Apabila keberanian dicampur dengan kesadaran kritis, tindakan nyata, dan kerja sama, kita bisa menciptakan masyarakat yang merdeka, adil, dan berkelanjutan."
+                </p>
+                <div class="page-footer">Bab III (4/6)</div>
+            </div>
+            
+            <div class="page-content" id="page-4">
+                <div class="page-header">BAB IV: ANARKIS KECIL DAN KESADARAN KRITIS</div>
+                <p>
+                    Sebagai seorang anarkis kecil, kita perlu **berpikir kritis** dan kreatif dalam mencari solusi-solusi alternatif terhadap masalah sosial. Ini berarti mempertanyakan apa yang diatur oleh pihak berkuasa dan tidak mudah menerima begitu saja informasi dari media atau penguasa.
+                </p>
+                <p>
+                    **Melawan Kapitalisme dan Oligarki:** Anarkis melawan kekuasaan kapitalis karena sistem ini mengabaikan hak dan kebutuhan dasar manusia. Oligarki adalah bentuk struktur kekuasaan yang membuat aturan dan kebijakan demi keuntungan segelintir elit. Bahkan, waktu luang kita pun dieksploitasi oleh iklan-iklan.
+                </p>
+                <p>
+                    **Tindakan Nyata:** Kita harus bertindak langsung (aksi langsung) untuk mengubah keadaan yang tidak adil. Ini bisa berupa gerakan menentang pembangunan yang merusak lingkungan atau membantu komunitas yang terpinggirkan.
+                </p>
+                <p style="font-style: italic; color: #555;">
+                    "Jangan takut bertanya, jangan takut untuk memikirkan ulang, jangan takut terlibat dalam perubahan." (Noam Chomsky)
+                </p>
+                <div class="page-footer">Bab IV (5/6)</div>
+            </div>
+            
+            <div class="page-content" id="page-5">
+                <div class="page-header">BAB V: MENUJU UTOPIA ANARKIS</div>
+                <p>
+                    Menciptakan masyarakat yang merdeka adalah tujuan akhir. Ini berarti membangun masyarakat yang menghargai kehidupan manusia, alam, dan saling membantu.
+                </p>
+                <p>
+                    **Contoh Penerapan:**
+                    <ul>
+                        <li>**Rojava (Kurdistan Suriah):** Masyarakat terorganisir dalam bentuk dewan-dewan rakyat, mengutamakan kesetaraan gender dan ekologi.</li>
+                        <li>**Desa Anarkis (Kalimantan Selatan):** Komunitas yang menolak konsep kepemilikan pribadi dan mengadopsi konsep kepemilikan bersama atas sumber daya.</li>
+                    </ul>
+                </p>
+                <p>
+                    **Epilog:** "Ini adalah sebuah kisah tentang tempat yang tak pernah ada. Utopia, bagaimanapun juga, kami sedang menuju ke sana. Tempat di mana tak ada penguasa yang memberi perintah. Tak ada polisi yang memperdaya. Tempat di mana masing-masing dari kita menjadi **pemimpin diri sendiri**. Berlarilah lebih cepat, wahai kamerad! Dunia tua membuntutimu dari belakang!"
+                </p>
+                <div class="page-footer">Bab V (6/6)</div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const bookContainer = document.getElementById('book-container');
+        const initialView = document.getElementById('initial-view');
+        const contentView = document.getElementById('content-view');
+        const contentWrapper = document.querySelector('.content-pages-wrapper');
+
+        // Fungsi untuk menampilkan Isi Buku
+        bookContainer.addEventListener('click', showContent);
+
+        function showContent() {
+            // Sembunyikan tampilan awal dengan fade-out
+            initialView.style.opacity = '0';
+            
+            setTimeout(() => {
+                initialView.style.display = 'none';
+                contentView.style.display = 'block';
+                // Reset scroll horizontal ke halaman pertama (Halaman Pengarang)
+                contentWrapper.scrollLeft = 0;
+            }, 500); // Tunggu sampai fade-out selesai
+        }
+
+        // Fungsi untuk menampilkan Cover dan Deskripsi (Dipanggil oleh tombol "Kembali ke Cover")
+        window.showCover = function() {
+            // Sembunyikan tampilan isi
+            contentView.style.display = 'none';
+            
+            // Tampilkan tampilan awal dengan fade-in
+            initialView.style.display = 'flex';
+            setTimeout(() => {
+                initialView.style.opacity = '1';
+            }, 50);
+        }
+    });
+</script>
+
+</body>
+</html>
